@@ -368,7 +368,7 @@ jobs:
             # Windows spawn re-bootstraps pytest per subprocess; skip the plugin
             # autoload scan (seconds per spawn) only here and load needed plugins
             # explicitly. Set on this command alone so other OSes keep autoload.
-            PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -p xdist -p pytest_mock --numprocesses auto "${probes[@]}" -rsx --doctest-modules nltk
+            PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 pytest -p xdist -p pytest_mock --numprocesses logical "${probes[@]}" -rsx --doctest-modules nltk
           elif [ "${{ matrix.os }}" = "macos-latest" ]; then
             # Files with wall-clock deadlines (proc.join backstops, "< N s" asserts,
             # the 40 s CoreNLP start) were starved by the parallel workers here, so
@@ -417,7 +417,7 @@ jobs:
             pytest -rsx "${quiet[@]}" || rc=1
             exit $rc
           else
-            pytest --numprocesses auto "${probes[@]}" -rsx --doctest-modules nltk
+            pytest --numprocesses logical "${probes[@]}" -rsx --doctest-modules nltk
           fi
 
   docker-cross-account:
